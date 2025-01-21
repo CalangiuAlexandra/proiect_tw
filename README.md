@@ -39,7 +39,8 @@ Proiect TW
   - Pentru a da aplicatiei un aspect mai frumos
   am salvat css-ul in fisiere distincte
   in "src/components/css" si am importat fisierele
-  in componente unde a fost cazul
+  in componente unde a fost cazul. Ca surse de inspiratie
+  pentru css am folosit W3Schools si StackOverflow
   - Fiecare pagina din aplicatie este o "componenta"
   astfel incat sa fie mai usor de urmarit codul
   - Logica de rutare interna React se afla in App.js
