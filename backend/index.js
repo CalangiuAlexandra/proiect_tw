@@ -8,9 +8,13 @@ const cors = require('cors');
 
 app.use(bodyParser.json());
 app.use(cors());
+const axios = require('axios');
+
+const TMDB_KEY = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzNzg5MzE1NmMwMjU4ZWI0NTQ5YjRlZTc0MmM3ZTk3NSIsIm5iZiI6MTczNzQ5Nzc3OS41NzMsInN1YiI6IjY3OTAxY2IzYWNjNmZhZTZiMTlkOTQ3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Xn9wESvcCQUPjsLE88gXOYxAWWPAzfiP-j7FTJm1HsU';
+const TMDB_URL = 'https://api.themoviedb.org/3';
 
 // Sincronizez baza de date si apoi adaug niste date initiale pentru testare
-sequelize.sync({ force: true }).then(async () => {
+sequelize.sync({ force: false }).then(async () => {
     const director = await Director.create({ name: 'Christopher Nolan' });
     const movie = await Movie.create({ title: 'Batman', releaseYear: 2014, directorId: director.id });
     const user = await User.create({ username: 'alexandra', password: "alexandra" });
@@ -316,6 +320,57 @@ app.post('/login', async (req, res) => {
         handleErrorResponse(res, error, 'Error on login');
     }
 });
+
+// Ruta pentru integrarea cu TMDB
+app.get('/tmdb/search', async (req, res) => {
+    const { value } = req.query;
+
+    if (!value) {
+        return res.status(400).json({ error: 'Search needs value' });
+    }
+
+    try {
+        const response = await axios.get(`${TMDB_URL}/search/movie`, {
+            params: {
+                query: value,
+            },
+            headers: {
+                Authorization: `Bearer ` + TMDB_KEY,
+            },
+        });
+
+        res.json(response.data.results);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Error getting TMDB movies.' });
+    }
+});
+
+// Ruta pentru a salva filmul din tmdb in sistem
+app.post('/tmdb/import', async (req, res) => {
+    const { movie } = req.body;
+
+    if (!movie || !movie.title || !movie.release_date) {
+        return res.status(400).json({ error: 'Invalid movie.' });
+    }
+
+    try {
+        const [director, created] = await Director.findOrCreate({
+            where: { name: 'Necunoscut' },
+        });
+
+        const newMovie = await Movie.create({
+            title: movie.title,
+            releaseYear: parseInt(movie.release_date.split('-')[0], 10),
+            directorId: director.id,
+        });
+
+        res.status(201).json(newMovie);
+    } catch (error) {
+        res.status(500).json({ error: 'Error importing movie.' });
+    }
+});
+
 
 // Pornesc aplicatia backend pe portul 3001
 const PORT = 3001;

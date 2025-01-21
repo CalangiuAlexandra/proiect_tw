@@ -1,0 +1,78 @@
+.tmdb-container {
+    padding: 2rem;
+    background-color: #f3f4f6;
+    min-height: 100vh;
+}
+
+.tmdb-search {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tmdb-search input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.tmdb-search button {
+    padding: 0.5rem 1rem;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tmdb-search button:hover {
+    background-color: #2563eb;
+}
+
+.tmdb-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.tmdb-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    text-align: center;
+}
+
+.tmdb-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.tmdb-card p {
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+.tmdb-card button {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tmdb-card button:hover {
+    background-color: #059669;
+}
+
+.success-message {
+    color: #10b981;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}

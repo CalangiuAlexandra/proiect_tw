@@ -12,6 +12,7 @@ function Navbar({ user }) {
                         <>
                             <li><Link to="/my-movies">Filmele Mele</Link></li>
                             <li><Link to="/movies">Filme</Link></li>
+                            <li><Link to="/tmdb">Biblioteca TMDB</Link></li>
                         </>
                     ) : (
                         <li><Link to="/login">Login</Link></li>

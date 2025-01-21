@@ -36,3 +36,31 @@ Proiect TW
   in acest folder si se va rula comanda:
 
         npm start
+  - Pentru a da aplicatiei un aspect mai frumos
+  am salvat css-ul in fisiere distincte
+  in "src/components/css" si am importat fisierele
+  in componente unde a fost cazul
+  - Fiecare pagina din aplicatie este o "componenta"
+  astfel incat sa fie mai usor de urmarit codul
+  - Logica de rutare interna React se afla in App.js
+  unde am definit fiecare ruta si ce componenta
+  sa afiseze
+  - Fiecare componenta isi face singura conexiunea
+  cu backend-ul, apeland API-urile de care are nevoie.
+  - Utilizatorul, ulterior autentificarii este 
+  salvat intr-o variabila in App.js si este trimis
+  componentelor care au nevoie de acesta pentru
+  logica de backend.
+
+- Serviciu Extern:
+  - Ca serviciu extern am folosit TMDB pentru
+  a apela API-ul lor de search.
+  - Rezultatele sunt afisate in niste card-uri
+  pe pagina aferenta TMDB.
+  - Conform documentatiei lor, ulterior inregistrarii
+  pe platforma lor am primit o cheie pe care
+  o pun in header cand apelez cautarea
+  - Cheia este tinuta intr-o variabila in 
+  index.js din backend pentru a putea fi folosita
+  de rute.
+  

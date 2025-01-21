@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import {useState} from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import MyMovies from "./components/MyMovies";
 import AllMovies from "./components/AllMovies";
+import TmdbMovies from "./components/TmdbMovies";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -18,6 +19,7 @@ function App() {
           <Route path="/my-movies" element={user ? <MyMovies user={user} /> : <Navigate to="/login" />} />
           <Route path="/movies" element={user ? <AllMovies user={user} /> : <Navigate to="/login" />} />
           <Route path="/" element={<Navigate to="/my-movies" />} />
+          <Route path="/tmdb" element={<TmdbMovies/>} />
         </Routes>
       </Router>
   );
