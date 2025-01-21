@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/my-movies" element={user ? <MyMovies user={user} /> : <Navigate to="/login" />} />
-          <Route path="/movies" element={user ? <AllMovies /> : <Navigate to="/login" />} />
+          <Route path="/movies" element={user ? <AllMovies user={user} /> : <Navigate to="/login" />} />
           <Route path="/" element={<Navigate to="/my-movies" />} />
         </Routes>
       </Router>

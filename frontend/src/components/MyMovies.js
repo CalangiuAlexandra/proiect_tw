@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './css/MyMovies.css';
 
 function MyMovies({ user }) {
     const [movies, setMovies] = useState([]);
@@ -13,15 +14,16 @@ function MyMovies({ user }) {
     }, [user]);
 
     return (
-        <div>
-            <h1>Filmele Mele</h1>
-            <ul>
+        <div className="movies-container">
+            <h1 className="movies-title">Filmele Mele</h1>
+            <div className="movies-grid">
                 {movies.map((movie) => (
-                    <li key={movie.id}>
-                        {movie.title} - {movie.releaseYear}
-                    </li>
+                    <div key={movie.id} className="movie-card">
+                        <h2 className="movie-title">{movie.title}</h2>
+                        <p className="movie-year">Lansat în: {movie.releaseYear}</p>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 }
