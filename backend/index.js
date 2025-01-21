@@ -1,11 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { sequelize, Director, Movie, User} = require('./models');
-const {genSaltSync, hashSync} = require("bcrypt");
+const {genSaltSync, hashSync, compareSync} = require("bcrypt");
 
 const app = express();
+const cors = require('cors');
 
 app.use(bodyParser.json());
+app.use(cors());
 
 // Sincronizez baza de date si apoi adaug niste date initiale pentru testare
 sequelize.sync({ force: true }).then(async () => {
@@ -287,6 +289,31 @@ app.delete('/movies/:id', async (req, res) => {
         return res.status(200).json({ success: true, message: 'Movie deleted successfully.' });
     } catch (error) {
         handleErrorResponse(res, error, 'Error deleting movie');
+    }
+});
+
+// Ruta de login
+app.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        const user = await User.findOne({ where: { username } });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        const isPasswordValid = compareSync(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({ error: 'Invalid password' });
+        }
+
+        const userResponse = { ...user.dataValues };
+        delete userResponse.password;
+
+        res.status(200).json(user);
+    } catch (error) {
+        handleErrorResponse(res, error, 'Error on login');
     }
 });
 
